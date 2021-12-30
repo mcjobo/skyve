@@ -1,0 +1,110 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping default-access="field">
+
+	<typedef name="OptimisticLock" class="org.skyve.impl.domain.types.OptimisticLockUserType" />
+	<typedef name="Decimal2" class="org.skyve.impl.domain.types.Decimal2UserType" />
+	<typedef name="Decimal5" class="org.skyve.impl.domain.types.Decimal5UserType" />
+	<typedef name="Decimal10" class="org.skyve.impl.domain.types.Decimal10UserType" />
+	<typedef name="DateOnly" class="org.skyve.impl.domain.types.DateOnlyUserType" />
+	<typedef name="DateTime" class="org.skyve.impl.domain.types.DateTimeUserType" />
+	<typedef name="TimeOnly" class="org.skyve.impl.domain.types.TimeOnlyUserType" />
+	<typedef name="Timestamp" class="org.skyve.impl.domain.types.TimestampUserType" />
+	<typedef name="Enum" class="org.skyve.impl.domain.types.EnumUserType" />
+	<class name="modules.zooManagement.domain.Assesment" table="ZOO_Assesment" entity-name="zooManagementAssesment">
+		<id name="bizId" length="36" />
+		<version name="bizVersion" unsaved-value="null" />
+		<property name="bizLock" type="OptimisticLock" length="271" not-null="true" />
+		<property name="bizKey" length="1024" not-null="true" />
+		<property name="bizCustomer" length="50" not-null="true" />
+		<property name="bizFlagComment" length="1024" />
+		<property name="bizDataGroupId" length="36" />
+		<property name="bizUserId" length="36" not-null="true" />
+		<property name="hygieneAssesment" type="text" />
+		<property name="painAssesment" type="text" />
+		<property name="continenceAssesment" length="600" />
+		<property name="behaviourAssesment" type="text" />
+		<many-to-one name="assessmentCreatedBy" entity-name="adminUser" column="assessmentCreatedBy_id" cascade="persist,save-update,refresh,merge" foreign-key="FK_ZOO_Assesment_assessmentCreatedBy"/>
+		<property name="assessmentReviewTime" type="DateTime" />
+		<filter name="zooManagementAssesmentNoneFilter" condition="1=0"/>
+		<filter name="zooManagementAssesmentCustomerFilter" condition="bizCustomer=:customerParam"/>
+		<filter name="zooManagementAssesmentDataGroupIdFilter" condition="bizDataGroupId=:dataGroupIdParam"/>
+		<filter name="zooManagementAssesmentUserIdFilter" condition="bizUserId=:userIdParam"/>
+	</class>
+
+	<class name="modules.zooManagement.domain.Facility" table="ZOO_Facility" entity-name="zooManagementFacility">
+		<id name="bizId" length="36" />
+		<version name="bizVersion" unsaved-value="null" />
+		<property name="bizLock" type="OptimisticLock" length="271" not-null="true" />
+		<property name="bizKey" length="1024" not-null="true" />
+		<property name="bizCustomer" length="50" not-null="true" />
+		<property name="bizFlagComment" length="1024" />
+		<property name="bizDataGroupId" length="36" />
+		<property name="bizUserId" length="36" not-null="true" />
+		<property name="facilityName" length="500" />
+		<property name="buildingNumber" />
+		<property name="streetName" length="500" />
+		<property name="suburb" length="500" />
+		<property name="state" length="500" />
+		<many-to-one name="facilityManager" entity-name="adminContact" column="facilityManager_id" cascade="persist,save-update,refresh,merge" foreign-key="FK_ZOO_Facility_facilityManager"/>
+		<property name="location" />
+		<filter name="zooManagementFacilityNoneFilter" condition="1=0"/>
+		<filter name="zooManagementFacilityCustomerFilter" condition="bizCustomer=:customerParam"/>
+		<filter name="zooManagementFacilityDataGroupIdFilter" condition="bizDataGroupId=:dataGroupIdParam"/>
+		<filter name="zooManagementFacilityUserIdFilter" condition="bizUserId=:userIdParam"/>
+	</class>
+
+	<class name="modules.zooManagement.domain.Resident" table="ZOO_Resident" entity-name="zooManagementResident">
+		<id name="bizId" length="36" />
+		<version name="bizVersion" unsaved-value="null" />
+		<property name="bizLock" type="OptimisticLock" length="271" not-null="true" />
+		<property name="bizKey" length="1024" not-null="true" />
+		<property name="bizCustomer" length="50" not-null="true" />
+		<property name="bizFlagComment" length="1024" />
+		<property name="bizDataGroupId" length="36" />
+		<property name="bizUserId" length="36" not-null="true" />
+		<property name="residentID" length="100" />
+		<property name="residentName" length="500" />
+		<property name="photo" length="36" />
+		<property name="DOB" type="DateOnly" />
+		<property name="roomNumber" />
+		<property name="BIO" type="text" />
+		<property name="admissionDate" type="DateOnly" />
+		<many-to-one name="facility" entity-name="zooManagementFacility" column="facility_id" cascade="persist,save-update,refresh,merge" foreign-key="FK_ZOO_Resident_facility"/>
+		<filter name="zooManagementResidentNoneFilter" condition="1=0"/>
+		<filter name="zooManagementResidentCustomerFilter" condition="bizCustomer=:customerParam"/>
+		<filter name="zooManagementResidentDataGroupIdFilter" condition="bizDataGroupId=:dataGroupIdParam"/>
+		<filter name="zooManagementResidentUserIdFilter" condition="bizUserId=:userIdParam"/>
+	</class>
+
+	<filter-def name="zooManagementAssesmentNoneFilter" />
+	<filter-def name="zooManagementAssesmentCustomerFilter">
+		<filter-param name="customerParam" type="string"/>
+	</filter-def>
+	<filter-def name="zooManagementAssesmentDataGroupIdFilter">
+		<filter-param name="dataGroupIdParam" type="string"/>
+	</filter-def>
+	<filter-def name="zooManagementAssesmentUserIdFilter">
+		<filter-param name="userIdParam" type="string"/>
+	</filter-def>
+	<filter-def name="zooManagementFacilityNoneFilter" />
+	<filter-def name="zooManagementFacilityCustomerFilter">
+		<filter-param name="customerParam" type="string"/>
+	</filter-def>
+	<filter-def name="zooManagementFacilityDataGroupIdFilter">
+		<filter-param name="dataGroupIdParam" type="string"/>
+	</filter-def>
+	<filter-def name="zooManagementFacilityUserIdFilter">
+		<filter-param name="userIdParam" type="string"/>
+	</filter-def>
+	<filter-def name="zooManagementResidentNoneFilter" />
+	<filter-def name="zooManagementResidentCustomerFilter">
+		<filter-param name="customerParam" type="string"/>
+	</filter-def>
+	<filter-def name="zooManagementResidentDataGroupIdFilter">
+		<filter-param name="dataGroupIdParam" type="string"/>
+	</filter-def>
+	<filter-def name="zooManagementResidentUserIdFilter">
+		<filter-param name="userIdParam" type="string"/>
+	</filter-def>
+</hibernate-mapping>

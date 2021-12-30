@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document xmlns="http://www.skyve.org/xml/document" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="Assesment" xsi:schemaLocation="http://www.skyve.org/xml/document ../../../schemas/document.xsd">
+    <persistent name="ZOO_Assesment"/>
+    <singularAlias>Assesment</singularAlias>
+    <pluralAlias>Assesments</pluralAlias>
+    <iconStyleClass>fa fa-book</iconStyleClass>
+    <bizKey expression="Assesment - {hygieneAssesment}"/>
+    <attributes>
+        <memo name="hygieneAssesment">
+            <displayName>Hygiene Assesment</displayName>
+        </memo>
+        <memo name="painAssesment">
+            <displayName>Pain Assesment</displayName>
+        </memo>
+        <text name="continenceAssesment">
+            <displayName>Continence Assesment</displayName>
+            <length>600</length>
+        </text>
+        <memo name="behaviourAssesment">
+            <displayName>Behaviour Assesment</displayName>
+        </memo>
+        <association type="aggregation" name="assessmentCreatedBy">
+            <displayName>Assessment Created By</displayName>
+            <documentName>User</documentName>
+        </association>
+        <dateTime name="assessmentReviewTime">
+            <displayName>Assessment Review Time</displayName>
+        </dateTime>
+    </attributes>
+</document>
